@@ -2791,6 +2791,46 @@
 
 </style>
 <link rel="stylesheet" href="./css/multiplayer.css">
+<style>
+
+/* ── Opsi bergambar: thumbnail ukuran wajar + tombol 🔍 perbesar ───────── */
+.option.hasImg { align-items: flex-start; }
+.optImgWrap { position: relative; display: inline-block; align-self: flex-start; max-width: 100%; }
+.optImg {
+  display: block; max-width: 100%; width: auto; height: auto;
+  max-height: 170px; object-fit: contain; border-radius: 6px;
+  background: #fff; border: 1px solid var(--border);
+}
+.optZoom {
+  position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(12, 8, 26, 0.78); color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  cursor: zoom-in; transition: transform 0.12s;
+}
+.optZoom:active { transform: scale(0.9); }
+
+/* ── Overlay zoom gambar (js/img-zoom.js) ─────────────────────────────── */
+body.imgZoomOpen { overflow: hidden; }
+.imgZoom {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(56px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  background: rgba(5, 4, 12, 0.92);
+  animation: imgZoomIn 0.18s ease both;
+}
+.imgZoomImg {
+  max-width: 100%; max-height: 100%; width: auto; height: auto;
+  object-fit: contain; border-radius: 8px; background: #fff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); touch-action: pinch-zoom;
+}
+.imgZoom .imgZoomClose {
+  position: absolute; top: max(12px, env(safe-area-inset-top)); right: 12px;
+  width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(255, 255, 255, 0.16); color: #fff; font: 600 20px/1 system-ui, sans-serif;
+  text-transform: none; letter-spacing: 0; transform: none; clip-path: none;
+}
+@keyframes imgZoomIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
 </head>
 <body>
 
@@ -2979,6 +3019,24 @@ async function convertDocx(buf) {
     .map((s, i) => ({ text: s.text.trim(), images: s.imgs.filter((k) => blobs[k]), isHeading: b.heading, isListItem: b.ordered && i === 0 }))
     .filter((l) => l.text || l.images.length);
 
+  // ── Tabel opsi gambar (5 kolom A–E): baris 1 = huruf, baris 2 = gambar tiap opsi, baris 3 = {penjelasan} ──
+  const OPT_LETTERS = ["A", "B", "C", "D", "E"];
+  const cellText = (cell) => cell.flatMap((b) => (b.segs ? b.segs.map((s) => s.text) : [])).join(" ").replace(/\s+/g, " ").trim();
+  const cellImg = (cell) => cell.flatMap((b) => (b.segs ? b.segs.flatMap((s) => s.imgs) : [])).find((k) => blobs[k] !== undefined);
+  const isOptTbl = (rows) => !!rows[0] && rows[0].length === OPT_LETTERS.length &&
+    rows[0].every((c, i) => cellText(c).replace(/[.)]$/, "").toUpperCase() === OPT_LETTERS[i]);
+  const optTableOf = (rows) => Object.fromEntries(OPT_LETTERS.map((L, i) => {
+    const pic = (rows[1] || [])[i] || [], exp = (rows[2] || [])[i] || [];
+    const body = parseOptionBody(cellText(exp));
+    return [L, { text: cellText(pic), image: cellImg(pic), exp: body.exp || body.text }];
+  }));
+  // Tabel opsi jadi satu baris khusus { optTable } untuk parser Bagian 1.
+  const lineOf = (bl) => bl.flatMap((b) => {
+    if (!b.tbl) return paraLines(b);
+    if (isOptTbl(b.tbl)) return [{ text: "", images: [], isHeading: false, isListItem: false, optTable: optTableOf(b.tbl) }];
+    return b.tbl.flat().flatMap(lineOf);
+  });
+
   // Bagian 2 = mulai dari heading "Bagian 2"/"Gagal Diperbaiki" terakhir; tanpa heading itu, mulai dari tabel pertama.
   // Bagian 3 = mulai dari heading "Bagian 3"/"Soal Isian" terakhir (kalau ada).
   let cut = -1, cut3 = -1;
@@ -2992,7 +3050,7 @@ async function convertDocx(buf) {
     // Tanpa heading Bagian 2: tabel pertama = Bagian 2 — tapi jangan lewati
     // heading Bagian 3 kalau sudah ketemu, atau tabel isian ikut kesedot ke sini.
     const searchEnd = cut3 >= 0 ? cut3 : blocks.length;
-    cut = blocks.findIndex((b, i) => b.tbl && i < searchEnd);
+    cut = blocks.findIndex((b, i) => b.tbl && !isOptTbl(b.tbl) && i < searchEnd);
   }
   const part1 = cut < 0 ? blocks : blocks.slice(0, cut);
   const part2 = cut < 0 ? [] : blocks.slice(cut, cut3 < 0 ? blocks.length : cut3);
@@ -3045,6 +3103,22 @@ async function convertDocx(buf) {
       mode = inline ? "answer" : "question";
     };
     for (const rawLine of lines) {
+      if (rawLine.optTable) { // tabel opsi gambar: isi A–E sekaligus
+        pendingOpt = null;
+        if (current) {
+          for (const L of OPT_LETTERS) {
+            const o = rawLine.optTable[L];
+            current.options[L] = o.text;
+            if (o.image !== undefined) {
+              current.optionImages = current.optionImages || {};
+              current.optionImages[L] = o.image;
+            }
+            if (o.exp) current.optionExplanations[L] = o.exp;
+          }
+          mode = "options";
+        }
+        continue;
+      }
       const hl = rawLine.text.startsWith(HL_MARK); // baris ini di-highlight (penanda kunci)
       const { images, isHeading, isListItem } = rawLine;
       const text = hl ? rawLine.text.slice(HL_MARK.length).trimStart() : rawLine.text;
@@ -3146,9 +3220,9 @@ async function convertDocx(buf) {
     return isian;
   }
 
-  const normal = parsePart1(flat(part1).flatMap(paraLines));
-  const rusak = parsePart2(part2.filter((b) => b.tbl).map((b) => b.tbl), normal.length);
-  const isian = parsePart3(part3.filter((b) => b.tbl).map((b) => b.tbl), normal.length + rusak.length);
+  const normal = parsePart1(lineOf(part1));
+  const rusak = parsePart2(part2.filter((b) => b.tbl && !isOptTbl(b.tbl)).map((b) => b.tbl), normal.length);
+  const isian = parsePart3(part3.filter((b) => b.tbl && !isOptTbl(b.tbl)).map((b) => b.tbl), normal.length + rusak.length);
   return { questions: [...normal, ...rusak, ...isian], blobs, stats: { normal: normal.length, rusak: rusak.length, isian: isian.length, images: blobs.filter(Boolean).length, skippedExt: [...skippedExt] } };
 }
 </script>
@@ -3159,6 +3233,7 @@ async function convertDocx(buf) {
 <!-- Firebase (compat) untuk Multiplayer -->
 <script src="./js/remote-bank.js"></script>
 <script src="./js/img-stack.js"></script>
+<script src="./js/img-zoom.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -3741,7 +3816,8 @@ function prepareCustomQs(rec) {
   const urls = rec.blobs.map((b) => b && URL.createObjectURL(b));
   customUrls = urls;
   const pick = (idxs) => idxs.map((i) => urls[i]);
-  return rec.questions.map((q) => ({ ...q, questionImages: pick(q.questionImages), explanationImages: pick(q.explanationImages) }));
+  const pickOpt = (o) => (o ? Object.fromEntries(Object.entries(o).map(([L, i]) => [L, urls[i]])) : undefined);
+  return rec.questions.map((q) => ({ ...q, questionImages: pick(q.questionImages), explanationImages: pick(q.explanationImages), optionImages: pickOpt(q.optionImages) }));
 }
 
 // Muat semua kuis custom dari IndexedDB. Kunci "custom" (format lama, 1 kuis) ikut dibaca.
@@ -4131,6 +4207,12 @@ function renderIsianCard(q, qNum, answeredValue) {
 }
 
 // ── Render: kartu soal (dipakai di semua mode) ────────────────────────────
+// Gambar opsi (thumbnail berukuran wajar) + tombol 🔍. Tombol ini <span>, bukan <button>,
+// karena letaknya di dalam <button class="option">. Klik-nya ditangkap js/img-zoom.js.
+function optionImageHtml(src) {
+  return `<span class="optImgWrap"><img class="optImg" src="${escapeAttr(src)}" alt="gambar opsi" loading="lazy"><span class="optZoom" data-zoom-src="${escapeAttr(src)}" title="Perbesar" aria-label="Perbesar gambar"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.6 15.6 20.5 20.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></span></span>`;
+}
+
 function renderQuestionCard(q, qNum, chosen, revealAnswer) {
   const isAnswered = chosen !== undefined && chosen !== null;
   const showState = revealAnswer && isAnswered;
@@ -4141,6 +4223,8 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer) {
     let letterCls = "letter";
     let icon = "";
     const locked = isAnswered ? " locked" : "";
+    const imgSrc = (q.optionImages || {})[letter];
+    if (imgSrc) cls += " hasImg";
 
     if (!showState) {
       if (chosen === letter) cls += " selected";
@@ -4168,7 +4252,8 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer) {
       <button class="${cls}${locked}" data-qid="${escapeAttr(q.id)}" data-letter="${escapeAttr(letter)}">
         <span class="${letterCls}" data-letter="${letter}">${(document.body.classList.contains("doksli") && window._dkImg) ? `<img class="doksli-letter-img" src="${window._dkImg()}" aria-hidden="true">` : letter}</span>
         <span class="optBody">
-          <span class="optText">${escapeHtml(text)}</span>
+          ${imgSrc ? optionImageHtml(imgSrc) : ""}
+          ${text ? `<span class="optText">${escapeHtml(text)}</span>` : ""}
           ${expHtml}
         </span>
         ${icon}
