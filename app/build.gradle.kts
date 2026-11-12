@@ -27,8 +27,8 @@ android {
         applicationId = "com.dotleav.soalin.premium"
         minSdk = 24
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.9"
+        versionCode = 7
+        versionName = "1.7"
     }
 
     buildTypes {

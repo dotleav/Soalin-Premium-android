@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Soalin Premium — Belajar? Kau?</title>
+<title>Soalin Premium — Belajar? Kau? 🤨</title>
 <link rel="icon" href="./favicon-tab.ico" type="image/x-icon">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#150f2b">
@@ -510,7 +510,7 @@
     z-index: 1;
   }
   body.p5 .packageItem.active .pkgTitle::before {
-    content: ""; display: inline-block; border-left: 7px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-right: 0.5em; vertical-align: 0.05em;
+    content: "▶  ";
     color: inherit;
   }
 
@@ -1491,7 +1491,7 @@
   .packageItem:hover { background: var(--border-light); }
   .packageItem.active { background: var(--accent-soft); }
   .packageItem .pkgTitle { font-weight: 700; font-size: 0.87rem; color: var(--text); }
-  .packageItem.active .pkgTitle::before { content: ""; display: inline-block; width: 0.9em; height: 0.9em; margin-right: 0.4em; vertical-align: -0.1em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 12.5l4.5 4.5L19.5 7.5' fill='none'/%3E%3C/svg%3E") center / contain no-repeat; color: var(--accent); }
+  .packageItem.active .pkgTitle::before { content: "\2713  "; color: var(--accent); }
   .packageItem .pkgMeta { color: var(--muted2); font-size: 0.7rem; }
 
   .pickerCloseBtn {
@@ -1690,7 +1690,7 @@
   }
   /* Star / heart confetti dots as pickerHeader decoration */
   body.sxf .pickerHeader::before {
-    content: ""; display: block; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.2l2.3 4.8 5.2.7-3.8 3.6.9 5.2L12 16l-4.6 2.5.9-5.2-3.8-3.6 5.2-.7z' fill='%23ffd46b'/%3E%3C/svg%3E") repeat-x center / 14px 14px;
+    content: "✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦";
     position: absolute;
     inset: 0;
     display: flex;
@@ -1898,7 +1898,7 @@
     background: linear-gradient(135deg, #ffecf2, #fff5f8);
     border-left: 4px solid var(--accent);
   }
-  body.sxf .packageItem.active .pkgTitle::before { content: ""; display: inline-block; width: 0.95em; height: 0.95em; margin-right: 0.45em; vertical-align: -0.12em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z' fill='%23ff8fb1'/%3E%3C/svg%3E") center / contain no-repeat; }
+  body.sxf .packageItem.active .pkgTitle::before { content: "💕  "; }
 
   /* ── pkgSwitchBtn ── */
   body.sxf .pkgSwitchBtn {
@@ -2216,7 +2216,7 @@
   }
 
   /* Floating Anya emoji after package active tick */
-  body.sxf .packageItem.active .pkgTitle::before { content: ""; display: inline-block; width: 0.95em; height: 0.95em; margin-right: 0.45em; vertical-align: -0.12em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z' fill='%23ff8fb1'/%3E%3C/svg%3E") center / contain no-repeat; }
+  body.sxf .packageItem.active .pkgTitle::before { content: "💕  "; }
 
   /* Card hover lift */
   body.sxf .qCard { transition: box-shadow 0.2s, transform 0.15s; }
@@ -2591,7 +2591,7 @@
     background: #fff9f9;
     border-left: 3px solid #c0392b;
   }
-  body.doksli .packageItem.active .pkgTitle::before { content: ""; display: inline-block; border-left: 7px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-right: 0.5em; vertical-align: 0.05em; color: #c0392b; }
+  body.doksli .packageItem.active .pkgTitle::before { content: "▶  "; color: #c0392b; }
 
   /* ── themeModeOption ── */
   body.doksli .themeModeOption {
@@ -2792,8 +2792,6 @@
 </style>
 <link rel="stylesheet" href="./css/multiplayer.css">
 <link rel="stylesheet" href="./css/mode-grid.css">
-<link rel="stylesheet" href="./css/theme-v2.css">
-<link rel="stylesheet" href="./css/header-compact.css">
 <style>
 
 /* ── Opsi bergambar: thumbnail ukuran wajar + tombol 🔍 perbesar ───────── */
@@ -2839,7 +2837,7 @@ body.imgZoomOpen { overflow: hidden; }
   .atWrap { border-top: 1px solid var(--border-light); margin-top: 6px; padding-top: 2px; }
   .atHead { border-bottom: none; }
   .atBody { padding: 4px 0 2px; }
-  .atBulk { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0 10px; }
+  .atBulk { display: flex; gap: 6px; flex-wrap: wrap; padding: 6px 0 10px; }
   .atBulkBtn {
     padding: 6px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
     background: var(--card-soft); color: var(--text-secondary); font-size: 0.74rem; font-weight: 700; cursor: pointer;
@@ -3318,7 +3316,6 @@ async function convertDocx(buf) {
 <script src="./js/answertone.js"></script>
 <script src="./js/tinjau.js"></script>
 <script src="./js/img-zoom.js"></script>
-<script src="./js/icons.js"></script>
 <script src="./js/render-cbt.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -3393,15 +3390,20 @@ const THEME_KEY = "soalinprem_theme"; // "dark" | "light" | "p5"
 const VOLUME_KEY = "soalinprem_volume"; // "0".."1"
 
 const DIFFICULTY_CONFIG = {
-  cheetah:  { label: "Cheetah",      sticker: "./images/modes/cheetah.webp",   timerSeconds: 30,  tentamen: true,  desc: "am fast boi",                                  color: "#f59e0b" },
-  normal:   { label: "Orang Normal", sticker: "./images/modes/normies.webp",   timerSeconds: 60,  tentamen: true,  desc: "dasar normies",                                color: "#58a6ff" },
-  folivora: { label: "Folivora",     sticker: "./images/modes/folivora.webp",  timerSeconds: 300, tentamen: true,  desc: "pasti pas ditanya jawabannya \u201Chah?\u201D",  color: "#86efac" },
-  bekicot:  { label: "Bekicot",      sticker: "./images/modes/bekicot.webp",   timerSeconds: 0,   tentamen: false, desc: "mode biasa aja kalau gitu",                    color: "#c084fc" },
-  minites:  { label: "minites dr Erda", icon: "./images/difficulty/squidward.png", sticker: "./images/modes/minites.webp", timerSeconds: 15, tentamen: true, desc: "Makan noh 15 detik", color: "#2dd4bf" },
-  cbt:      { label: "CBT", sticker: "./images/modes/cbt.webp", timerSeconds: 0, tentamen: false, cbt: true, desc: "Computer Based Test", descHtml: "<s>Cognitive Based Therapy</s><br><b>Computer Based Test</b>", color: "#f472b6" },
+  cheetah:  { label: "Cheetah",      emoji: "🐆", sticker: "./images/modes/cheetah.webp",   timerSeconds: 30,  tentamen: true,  desc: "am fast boi",                                  color: "#f59e0b" },
+  normal:   { label: "Orang Normal", emoji: "🧍", sticker: "./images/modes/normies.webp",   timerSeconds: 60,  tentamen: true,  desc: "dasar normies",                                color: "#58a6ff" },
+  folivora: { label: "Folivora",     emoji: "🦥", sticker: "./images/modes/folivora.webp",  timerSeconds: 300, tentamen: true,  desc: "pasti pas ditanya jawabannya \u201Chah?\u201D",  color: "#86efac" },
+  bekicot:  { label: "Bekicot",      emoji: "🐌", sticker: "./images/modes/bekicot.webp",   timerSeconds: 0,   tentamen: false, desc: "mode biasa aja kalau gitu",                    color: "#c084fc" },
+  minites:  { label: "minites dr Erda", emoji: "", icon: "./images/difficulty/squidward.png", sticker: "./images/modes/minites.webp", timerSeconds: 15, tentamen: true, desc: "Makan noh 15 detik", color: "#2dd4bf" },
+  cbt:      { label: "CBT", emoji: "🖥️", sticker: "./images/modes/cbt.webp", timerSeconds: 0, tentamen: false, cbt: true, desc: "Computer Based Test", descHtml: "<s>Cognitive Based Therapy</s><br><b>Computer Based Test</b>", color: "#f472b6" },
 };
 
 // Ikon tingkat kesulitan: pakai gambar kalau ada `icon`, selain itu emoji.
+function diffIconHtml(cfg, cls) {
+  return cfg.icon
+    ? `<img class="${cls}" src="${cfg.icon}" alt="" aria-hidden="true">`
+    : cfg.emoji;
+}
 
 const app = document.getElementById("app");
 
@@ -3584,20 +3586,20 @@ function playSound(correct) {
     const sxfNotifEl = document.getElementById("sxfNotif");
     if (sxfNotifEl) {
       const SXF_CORRECT_VARIANTS = [
-        { img: "./images/inline/34f67c6c420c.png", text: "WAKU WAKU!", icon: "sparkle", cls: "sxfV-anya" },
-        { img: "./images/inline/34f67c6c420c.png", text: "Anya senang!", icon: "star", cls: "sxfV-anya" },
-        { img: "./images/inline/b9e0d3f529fc.png", text: "Bond setuju!", icon: "paw", cls: "sxfV-bond" },
-        { img: "./images/inline/34f67c6c420c.png", text: "Anya bangga!", icon: "star", cls: "sxfV-anya" },
-        { img: "./images/inline/bf7027bfb338.png", text: "Becky terkesan!", icon: "sparkle", cls: "sxfV-becky" },
-        { img: "./images/inline/34f67c6c420c.png", text: "Hebat! anya tahu!", icon: "star", cls: "sxfV-anya" },
+        { img: "./images/inline/34f67c6c420c.png", text: "✦ WAKU WAKU! ⭐", cls: "sxfV-anya" },
+        { img: "./images/inline/34f67c6c420c.png", text: "Anya senang! 🌟", cls: "sxfV-anya" },
+        { img: "./images/inline/b9e0d3f529fc.png", text: "Bond setuju! 🐾", cls: "sxfV-bond" },
+        { img: "./images/inline/34f67c6c420c.png", text: "Anya bangga! 💪", cls: "sxfV-anya" },
+        { img: "./images/inline/bf7027bfb338.png", text: "Becky terkesan! ✨", cls: "sxfV-becky" },
+        { img: "./images/inline/34f67c6c420c.png", text: "Hebat! anya tahu! 🎉", cls: "sxfV-anya" },
       ];
       const SXF_WRONG_VARIANTS = [
-        { img: "./images/inline/e95a29cd1acc.png", text: "Anya sedih...", icon: "heart", cls: "sxfV-anya" },
-        { img: "./images/inline/d7d7f10b71fd.png", text: "Yor kecewa...", icon: "sword", cls: "sxfV-yor" },
-        { img: "./images/inline/e95a29cd1acc.png", text: "Heh? salah ya?", icon: "heart", cls: "sxfV-anya" },
-        { img: "./images/inline/d7d7f10b71fd.png", text: "Yor tidak setuju!", icon: "sword", cls: "sxfV-yor" },
-        { img: "./images/inline/e95a29cd1acc.png", text: "Anya kaget!", icon: "sparkle", cls: "sxfV-anya" },
-        { img: "./images/inline/b9e0d3f529fc.png", text: "Bond geleng kepala", icon: "paw", cls: "sxfV-bond" },
+        { img: "./images/inline/e95a29cd1acc.png", text: "Anya sedih... 😢", cls: "sxfV-anya" },
+        { img: "./images/inline/d7d7f10b71fd.png", text: "Yor kecewa... 😤", cls: "sxfV-yor" },
+        { img: "./images/inline/e95a29cd1acc.png", text: "Heh? salah ya? 😅", cls: "sxfV-anya" },
+        { img: "./images/inline/d7d7f10b71fd.png", text: "Yor tidak setuju! ⚔️", cls: "sxfV-yor" },
+        { img: "./images/inline/e95a29cd1acc.png", text: "Anya kaget! 😱", cls: "sxfV-anya" },
+        { img: "./images/inline/b9e0d3f529fc.png", text: "Bond geleng kepala 🐶", cls: "sxfV-bond" },
       ];
       const pool = correct ? SXF_CORRECT_VARIANTS : SXF_WRONG_VARIANTS;
       const lastIdx = sxfNotifEl._lastIdx ?? -1;
@@ -3609,7 +3611,7 @@ function playSound(correct) {
       const imgEl = sxfNotifEl.querySelector(".sxfNotifAnya");
       const txtEl = sxfNotifEl.querySelector(".sxfNotifText");
       if (imgEl) imgEl.src = v.img;
-      if (txtEl) txtEl.innerHTML = (v.icon ? svgIcon(v.icon) + " " : "") + escapeHtml(v.text);
+      if (txtEl) txtEl.textContent = v.text;
       // Clear old variant classes
       sxfNotifEl.classList.remove("sxfV-anya","sxfV-bond","sxfV-yor","sxfV-becky");
       sxfNotifEl.className = "sxfNotif " + (correct ? "sxfCorrect" : "sxfWrong") + " " + v.cls;
@@ -3659,7 +3661,7 @@ function setVolume(v) {
 }
 
 // ── Tema (dark/light/p5) ──────────────────────────────────────────────────
-const THEME_VALUES = ["dark", "light", "p5", "sxf", "doksli", "darkv2", "lightv2"];
+const THEME_VALUES = ["dark", "light", "p5", "sxf", "doksli"];
 let theme = THEME_VALUES.includes(localStorage.getItem(THEME_KEY)) ? localStorage.getItem(THEME_KEY) : "dark";
 function setTheme(t) {
   theme = THEME_VALUES.includes(t) ? t : "dark";
@@ -3669,8 +3671,6 @@ function syncThemeClass() {
   document.body.classList.toggle("light", theme === "light");
   document.body.classList.toggle("p5", theme === "p5");
   document.body.classList.toggle("sxf", theme === "sxf");
-  document.body.classList.toggle("darkv2", theme === "darkv2");
-  document.body.classList.toggle("lightv2", theme === "lightv2");
   document.body.classList.toggle("doksli", theme === "doksli");
 }
 
@@ -3892,11 +3892,11 @@ async function loadCustom() {
 async function handleDocx(fileList) {
   const files = [...fileList].filter((f) => /\.(docx|pdf)$/i.test(f.name));
   pickerOpen = true; // pesan (proses/gagal) harus kelihatan walau lagi di tengah kuis
-  if (!files.length) { dropMsg = "[warn] Pilih file Word (.docx) atau PDF (.pdf)."; render(); return; }
+  if (!files.length) { dropMsg = "⚠️ Pilih file Word (.docx) atau PDF (.pdf)."; render(); return; }
   const msgs = [];
   let last = null;
   for (const file of files) {
-    dropMsg = [...msgs, `[wait] Mengonversi ${file.name}…`].join("\n");
+    dropMsg = [...msgs, `⏳ Mengonversi ${file.name}…`].join("\n");
     render();
     try {
       const { questions, blobs, stats } = await convertDocx(await file.arrayBuffer());
@@ -3907,17 +3907,17 @@ async function handleDocx(fileList) {
       customQuizzes.unshift({ ...rec, key: "cq:" + rec.id });
       clearCustomProgress(rec.id);
       last = rec;
-      const skipped = stats.skippedExt.length ? ` [warn] gambar .${stats.skippedExt.join(", .")} dilewati (browser tidak bisa menampilkan)` : "";
-      msgs.push(`[ok] ${file.name}: ${stats.normal} soal${stats.rusak ? ` + ${stats.rusak} soal rusak` : ""}${stats.isian ? ` + ${stats.isian} soal isian` : ""}, ${stats.images} gambar${skipped}${saved ? "" : " [warn] tidak tersimpan (IndexedDB)"}`);
+      const skipped = stats.skippedExt.length ? ` ⚠️ gambar .${stats.skippedExt.join(", .")} dilewati (browser tidak bisa menampilkan)` : "";
+      msgs.push(`✅ ${file.name}: ${stats.normal} soal${stats.rusak ? ` + ${stats.rusak} soal rusak` : ""}${stats.isian ? ` + ${stats.isian} soal isian` : ""}, ${stats.images} gambar${skipped}${saved ? "" : " ⚠️ tidak tersimpan (IndexedDB)"}`);
     } catch (e) {
-      msgs.push(`[err] ${file.name}: ${e instanceof ReferenceError ? "Browser terlalu lama (butuh DecompressionStream). Pakai Chrome/Edge/Firefox/Safari terbaru." : e.message}`);
+      msgs.push(`❌ ${file.name}: ${e instanceof ReferenceError ? "Browser terlalu lama (butuh DecompressionStream). Pakai Chrome/Edge/Firefox/Safari terbaru." : e.message}`);
     }
   }
   dropMsg = msgs.join("\n");
   // Satu file yang sukses langsung dimainkan; banyak file → tetap di pemilih paket.
   if (files.length === 1 && last) {
     await selectPackage(customPkg(last));
-    pickerOpen = msgs[0].includes("[warn]");
+    pickerOpen = msgs[0].includes("⚠️");
   }
   render();
 }
@@ -3935,7 +3935,7 @@ async function deleteCustom(recId) {
     try { localStorage.removeItem(ACTIVE_PKG_KEY); } catch { /* noop */ }
     resetQuizStateForNewPackage();
   }
-  dropMsg = "[del] Kuis custom dihapus.";
+  dropMsg = "🗑️ Kuis custom dihapus.";
   pickerOpen = true;
   render();
 }
@@ -4192,7 +4192,7 @@ function renderBrokenCard(q, qNum) {
 
   const revealHtml = isRevealed ? `
     <div class="brokenReveal">
-      <div class="tag">${svgIcon("image")} Gambar Penjelasan</div>
+      <div class="tag">🖼️ Gambar Penjelasan</div>
       ${hasQImages ? renderImgs(q.questionImages || [], "exImg", "gambar soal") : ""}
       ${exText.length ? `<div class="exText">${exText.map(t => `<p>${escapeHtml(t)}</p>`).join("")}</div>` : ""}
       ${hasImages
@@ -4204,8 +4204,8 @@ function renderBrokenCard(q, qNum) {
   return `
     <div class="brokenCard" data-broken-id="${escapeAttr(q.id)}">
       <div class="brokenMeta">
-        <span class="brokenBadge">${svgIcon("warning")} Soal Rusak</span>
-        ${!isRevealed ? `<span class="tapHint">${svgIcon("chevron-down")} Tap untuk lihat gambar</span>` : `<span class="tapHint">${svgIcon("chevron-up")} Tap lagi untuk tutup</span>`}
+        <span class="brokenBadge">⚠️ Soal Rusak</span>
+        ${!isRevealed ? `<span class="tapHint">👆 Tap untuk lihat gambar</span>` : `<span class="tapHint">👆 Tap lagi untuk tutup</span>`}
       </div>
       <p class="brokenQ"><span class="brokenNum">${qNum}.</span>${escapeHtml(q.question)}</p>
       ${revealHtml}
@@ -4226,9 +4226,9 @@ function renderIsianCard(q, qNum, answeredValue) {
   if (isSkipped) {
     bodyHtml = `
       <div class="isianReveal">
-        <div class="skipNote">${svgIcon("skip")} Soal ini dilewati${cbtActive() ? " (belum dijawab)" : " (waktu habis)"}</div>
+        <div class="skipNote">⏭️ Soal ini dilewati${cbtActive() ? " (belum dijawab)" : " (waktu habis)"}</div>
         <div class="explanation">
-          <div class="tag">${svgIcon("key")} Kunci Jawaban</div>
+          <div class="tag">🔑 Kunci Jawaban</div>
           <p>${escapeHtml(q.answer || "(tidak ada kunci jawaban)")}</p>
         </div>
       </div>
@@ -4237,11 +4237,11 @@ function renderIsianCard(q, qNum, answeredValue) {
     bodyHtml = `
       <div class="isianReveal">
         <div class="isianYourAnswer">
-          <div class="tag">${svgIcon("pen")} Jawaban kamu <span class="icon ok">${svgIcon("check")}</span> <span class="isianCorrectLabel">Benar</span></div>
+          <div class="tag">✍️ Jawaban kamu <span class="icon ok">✓</span> <span class="isianCorrectLabel">Benar</span></div>
           <p>${escapeHtml(answeredValue)}</p>
         </div>
         <div class="explanation">
-          <div class="tag">${svgIcon("key")} Kunci Jawaban</div>
+          <div class="tag">🔑 Kunci Jawaban</div>
           <p>${escapeHtml(q.answer || "(tidak ada kunci jawaban)")}</p>
         </div>
       </div>
@@ -4250,7 +4250,7 @@ function renderIsianCard(q, qNum, answeredValue) {
     bodyHtml = `
       <div class="isianInputRow">
         <textarea class="isianInput" data-qid="${escapeAttr(q.id)}" rows="2" placeholder="Ketik jawabanmu di sini…"></textarea>
-        <button class="isianSubmitBtn" data-qid="${escapeAttr(q.id)}" title="Kirim jawaban" aria-label="Kirim jawaban">${svgIcon("chevron-right")}</button>
+        <button class="isianSubmitBtn" data-qid="${escapeAttr(q.id)}" title="Kirim jawaban" aria-label="Kirim jawaban">▶</button>
       </div>
     `;
   }
@@ -4258,9 +4258,9 @@ function renderIsianCard(q, qNum, answeredValue) {
   return `
     <div class="qCard isianCard">
       <div class="qMeta">
-        <span class="isianBadge">${svgIcon("pen")} Isian</span>
-        ${(q.questionImages || []).length > 0 ? `<span class="imgBadge">${svgIcon("image")} Bergambar</span>` : ""}
-        ${isAnswered ? `<span class="tapHint">${svgIcon("check")} Sudah dijawab</span>` : ""}
+        <span class="isianBadge">✍️ Isian</span>
+        ${(q.questionImages || []).length > 0 ? `<span class="imgBadge">🖼️ Bergambar</span>` : ""}
+        ${isAnswered ? `<span class="tapHint">✅ Sudah dijawab</span>` : ""}
       </div>
       <p class="qText"><span class="qNum mono">${qNum}.</span>${escapeHtml(q.question)}</p>
       ${renderImgs(q.questionImages || [], "qImg", "gambar soal")}
@@ -4294,12 +4294,12 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer, opts = {}) {
     } else {
       if (letter === q.answer) {
         cls += " correct"; letterCls += " correct";
-        if (chosen === letter) icon = `<span class="icon ok">${svgIcon("check")}</span>`;
+        if (chosen === letter) icon = `<span class="icon ok">\u2713</span>`;
       } else if (letter === chosen) {
         cls += " wrong"; letterCls += " wrong";
         icon = theme === "p5"
           ? `<span class="icon no"><img src="./images/inline/6d225a17272f.png" alt="salah" style="width:14px;height:14px;vertical-align:middle;"></span>`
-          : `<span class="icon no">${svgIcon("close")}</span>`;
+          : `<span class="icon no">\u2715</span>`;
       } else {
         cls += " faded"; letterCls += " faded";
       }
@@ -4307,8 +4307,8 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer, opts = {}) {
 
     // Penjelasan per opsi: hanya tampil setelah jawab, dan hanya kalau memang ada.
     let expTag = "";
-    if (letter === q.answer) expTag = `<span class="optExpTag ok">${svgIcon("check")} Jawaban yang benar</span>`;
-    else if (letter === chosen) expTag = `<span class="optExpTag no">${svgIcon("close")} Kurang tepat</span>`;
+    if (letter === q.answer) expTag = `<span class="optExpTag ok">\u2713 Jawaban yang benar</span>`;
+    else if (letter === chosen) expTag = `<span class="optExpTag no">\u2715 Kurang tepat</span>`;
     const expHtml = (showState && oExp[letter]) ? `<span class="optExp">${expTag}${escapeHtml(oExp[letter])}</span>` : "";
 
     return `
@@ -4325,14 +4325,14 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer, opts = {}) {
   }).join("");
 
   const skipNoteHtml = (showState && chosen === "skipped")
-    ? `<div class="skipNote">${svgIcon("skip")} Soal ini dilewati${cbtActive() ? " (belum dijawab)" : " (waktu habis)"}</div>`
+    ? `<div class="skipNote">\u23ED\uFE0F Soal ini dilewati${cbtActive() ? " (belum dijawab)" : " (waktu habis)"}</div>`
     : "";
 
   // Card Gambar Penjelasan: teks opsional, utamanya gambar. Tidak tampil kalau kosong.
   const hasGambarPenj = !!q.explanation || (q.explanationImages || []).length > 0;
   const explanationHtml = (showState && hasGambarPenj) ? `
     <div class="explanation">
-      <div class="tag">${svgIcon("image")} Gambar Penjelasan</div>
+      <div class="tag">\uD83D\uDDBC\uFE0F Gambar Penjelasan</div>
       ${q.explanation ? `<p>${escapeHtml(q.explanation)}</p>` : ""}
       ${renderImgs(q.explanationImages || [], "exImg", "gambar penjelasan")}
     </div>
@@ -4341,7 +4341,7 @@ function renderQuestionCard(q, qNum, chosen, revealAnswer, opts = {}) {
   return `
     <div class="qCard">
       <div class="qMeta">
-        ${(q.questionImages || []).length > 0 ? `<span class="imgBadge">${svgIcon("image")} Bergambar</span>` : ""}
+        ${(q.questionImages || []).length > 0 ? `<span class="imgBadge">\uD83D\uDDBC\uFE0F Bergambar</span>` : ""}
       </div>
       <p class="qText"><span class="qNum mono">${qNum}.</span>${escapeHtml(q.question)}</p>
       ${renderImgs(q.questionImages || [], "qImg", "gambar soal")}
@@ -4363,16 +4363,14 @@ function renderHeaderZone() {
     trackerHtml = `
       <div class="tracker">
         <div class="count mono">${answeredCount}/${totalQ}</div>
-        <div class="sub"><span class="ok">${correctCount}</span>/<span class="bad">${answeredCount - correctCount}</span></div>
+        <div class="sub">dijawab \u00B7 benar <span class="ok">${correctCount}</span></div>
       </div>
     `;
   } else if (quizMode === "tentamen" && tentamenState === "running") {
-    const tentAnswered = tentamenAnswers.filter((a) => a !== null && a !== undefined && a !== "skipped").length;
-    const tentCorrect = tentamenAnswers.filter((a, i) => a && a !== "skipped" && (tentamenQuestions[i]?.isIsian || a === tentamenQuestions[i]?.answer)).length;
     trackerHtml = `
       <div class="tracker">
-        <div class="count mono" id="trackerCount">${cbtActive() ? `${cbtAnsweredCount()}/${tentamenQuestions.length}` : `${tentAnswered}/${tentamenQuestions.length}`}</div>
-        <div class="sub">${cbtActive() ? "" : `<span class="ok">${tentCorrect}</span>/<span class="bad">${tentAnswered - tentCorrect}</span>`}</div>
+        <div class="count mono" id="trackerCount">${cbtActive() ? cbtAnsweredCount() + "/" + tentamenQuestions.length : (currentIdx + 1) + "/" + tentamenQuestions.length}</div>
+        <div class="sub">${cbtActive() ? "dijawab" : "soal"}</div>
       </div>
     `;
   }
@@ -4389,10 +4387,9 @@ function renderHeaderZone() {
           <div class="headerInner">
             <div class="titleRow">
               <div>
-                <button class="pkgSwitchBtn iconBtn" id="pkgSwitchBtn" title="${activePackage ? "Ganti paket" : "Pilih paket soal"}" aria-label="${activePackage ? "Ganti paket" : "Pilih paket soal"}">${svgIcon("folder")} <span class="lbl">${activePackage ? "Ganti paket" : "Pilih paket soal"}</span></button>
                 <h1${activePackage ? ` class="pkgTitleActive"` : ""}>${activePackage ? escapeHtml(activePackage.title) : "Quiz App"}</h1>
                 ${activePackage ? `<div class="pkgSubtitle">${escapeHtml(activePackage.category)}</div>` : ""}
-                
+                <button class="pkgSwitchBtn" id="pkgSwitchBtn">\uD83D\uDCC2 ${activePackage ? "Ganti paket" : "Pilih paket soal"}</button>
               </div>
               ${trackerHtml}
             </div>
@@ -4403,20 +4400,20 @@ function renderHeaderZone() {
       <div class="modeBar">
         <div class="modeBarInner">
           <button class="hideToggleBtn${headerHidden ? " active" : ""}" id="hideHeaderBtn" title="Sembunyikan header" aria-label="Sembunyikan header">
-            <span class="arrow">${svgIcon("chevron-up")}</span>
+            <span class="arrow">\u25B2</span>
           </button>
-          <button class="muteBtn${isMuted ? "" : " on"}" id="muteBtn" title="${isMuted ? "Nyalakan suara" : "Matikan suara"}">${isMuted ? svgIcon("speaker-off") : svgIcon("speaker")}</button>
-          <button class="pillBtn${quizMode === "biasa" ? " active" : ""}" data-mode="biasa">Default</button>
-          <button class="pillBtn${quizMode === "tentamen" ? " active" : ""}" data-mode="tentamen">Modes</button>
-          ${showFilterBar ? `<button class="shuffleBtn iconBtn${activeShuffle ? " active" : ""}" id="shuffleBtn" aria-pressed="${activeShuffle}" aria-label="Acak soal" title="Acak soal: ${activeShuffle ? "ON" : "OFF"}">${svgIcon("shuffle")} <span class="lbl">Acak ${activeShuffle ? "ON" : "OFF"}</span></button>` : ""}
-          ${showReset ? `<button class="resetBtn iconBtn" id="resetBtn" title="Reset" aria-label="Reset">${svgIcon("reset")} <span class="lbl">Reset</span></button>` : ""}
+          <button class="muteBtn${isMuted ? "" : " on"}" id="muteBtn" title="${isMuted ? "Nyalakan suara" : "Matikan suara"}">${isMuted ? "\uD83D\uDD07" : "\uD83D\uDD0A"}</button>
+          <button class="pillBtn${quizMode === "biasa" ? " active" : ""}" data-mode="biasa">Default Mode</button>
+          <button class="pillBtn${quizMode === "tentamen" ? " active" : ""}" data-mode="tentamen">Other Modes</button>
+          ${showFilterBar ? `<button class="shuffleBtn${activeShuffle ? " active" : ""}" id="shuffleBtn">\u2928 Acak ${activeShuffle ? "ON" : "OFF"}</button>` : ""}
+          ${showReset ? `<button class="resetBtn" id="resetBtn">\u21BA Reset</button>` : ""}
         </div>
       </div>`}
 
       ${headerHidden ? `
       <div class="collapsedToggleWrap">
         <button class="hideToggleBtn" id="hideHeaderBtn" title="Tampilkan header" aria-label="Tampilkan header">
-          <span class="arrow" style="transform:rotate(180deg);">${svgIcon("chevron-up")}</span>
+          <span class="arrow" style="transform:rotate(180deg);">\u25B2</span>
         </button>
       </div>` : ""}
     </div>
@@ -4440,7 +4437,7 @@ function renderBiasaMode() {
   let html = `
     <div class="progressCard">
       <div class="progressTop">
-        <span class="left"><span class="v2hide">Sudah dijawab: </span><span class="num mono">${answeredCount}</span> / <span class="num total mono">${totalCount}</span></span>
+        <span class="left">Sudah dijawab: <span class="num mono">${answeredCount}</span> / Total: <span class="num total mono">${totalCount}</span></span>
         <div style="display:flex; gap:12px;">
           <span class="statChip"><span class="dot" style="background:var(--correct);"></span><span class="mono" style="color:var(--correct); font-weight:700;">${correctCount}</span><span style="color:var(--muted2);">benar</span></span>
           <span class="statChip"><span class="dot" style="background:var(--wrong);"></span><span class="mono" style="color:var(--wrong); font-weight:700;">${answeredCount - correctCount}</span><span style="color:var(--muted2);">salah</span></span>
@@ -4453,9 +4450,9 @@ function renderBiasaMode() {
   if (allDone) {
     html += `
       <div class="doneBanner">
-        <span style="font-size:1.3rem;">${svgIcon("award")}</span>
+        <span style="font-size:1.3rem;">\uD83C\uDFC6</span>
         <div>
-          <span class="title v2hide">Selesai! </span>
+          <span class="title">Selesai! </span>
           <span class="sub">Skor akhir: ${correctCount}/${totalCount} (${Math.round((correctCount/totalCount)*100)}%)</span>
         </div>
       </div>
@@ -4480,7 +4477,7 @@ function renderBiasaMode() {
   html += `</div>`;
 
   if (hasMore) {
-    html += `<button class="loadMoreBtn" id="loadMoreBtn">${svgIcon("chevron-right")} Lebih banyak (${Math.min(LOAD_BATCH, remaining)})</button>`;
+    html += `<button class="loadMoreBtn" id="loadMoreBtn">\u2794 Lebih banyak (${Math.min(LOAD_BATCH, remaining)})</button>`;
   }
 
   return html;
@@ -4504,7 +4501,7 @@ function renderTentamenSetup() {
   // diberi lencana "Tentamen" di pojok kanan atas. Bekicot & CBT bukan Tentamen.
   let html = `<div class="quiz-fade-in">`;
   html += `<div>
-    <div class="sectionLabel v2hide">Pilih mode</div>
+    <div class="sectionLabel">Pilih mode</div>
     <div class="modeGrid">`;
   Object.keys(DIFFICULTY_CONFIG).forEach(d => {
     html += modeTileHtml(d, tentamenDifficulty === d);
@@ -4523,7 +4520,7 @@ function renderTentamenSetup() {
   if (cbt) html += renderCbtTimeBar();
 
   html += `<button class="startTentamenBtn" id="startTentamenBtn" style="background:${cfg.color};" ${qCount === 0 ? "disabled" : ""}>
-    ${svgIcon("play")} Mulai <img class="startSticker" src="${cfg.sticker}" alt="" aria-hidden="true">
+    \u25B6 Mulai <img class="startSticker" src="${cfg.sticker}" alt="" aria-hidden="true">
   </button>`;
   html += `</div>`;
   return html;
@@ -4566,7 +4563,7 @@ function renderTentamenRunning() {
   html += `<div class="timerCard${isUrgent ? " urgent" : ""}${isTimeout ? " timeoutFlash" : ""}" id="timerCard">
     <div class="timerTop">
       <div class="timerLabel${isUrgent ? " urgent" : ""}" id="timerLabel">
-        ${svgIcon("timer")} ${tentamenDifficulty === "bekicot" ? "No timer" : isAnswering ? "Waktu tersisa" : isTimeout ? "Waktu habis!" : "Selesai"}
+        \u23F1 ${tentamenDifficulty === "bekicot" ? "No timer \uD83D\uDC0C" : isAnswering ? "Waktu tersisa" : isTimeout ? "Waktu habis!" : "Selesai"}
       </div>
       <span class="timerNum${isUrgent ? " pulse" : ""}" id="timerNum" style="color:${isUrgent ? "var(--wrong-strong)" : cfg.color};">
         ${tentamenDifficulty === "bekicot" ? "\u221E" : String(isAnswering ? timeLeft : isTimeout ? 0 : timeLeft).padStart(2, "0")}
@@ -4585,17 +4582,17 @@ function renderTentamenRunning() {
   }
 
   if (isTimeout) {
-    html += `<div class="timeoutNotice">${svgIcon("warning")} <span>Waktu habis! Soal ini dihitung terlewati. Melanjutkan…</span></div>`;
+    html += `<div class="timeoutNotice">\u26A0\uFE0F <span>Waktu habis! Soal ini dihitung terlewati. Melanjutkan\u2026</span></div>`;
   }
 
   if (viewing !== null) {
-    html += `<button class="nextBtn trvResume iconBtn" id="tentamenResumeBtn" title="Lanjutkan kuis" aria-label="Lanjutkan kuis">${svgIcon("return")} <span class="lbl">Lanjutkan Kuis</span></button>`;
+    html += `<button class="nextBtn trvResume" id="tentamenResumeBtn">\u21A9 Lanjutkan Kuis</button>`;
   } else {
     html += tentamenReviewBarHtml();
   }
 
   if (isManual && viewing === null) {
-    html += `<button class="nextBtn" id="nextTentamenBtn">${qNum < total ? `${svgIcon("chevron-right")} Berikutnya` : `${svgIcon("award")} Lihat Hasil`}</button>`;
+    html += `<button class="nextBtn" id="nextTentamenBtn">${qNum < total ? "\u2794 Soal Berikutnya" : "\uD83C\uDFC6 Lihat Hasil"}</button>`;
   }
 
   html += `</div>`;
@@ -4624,8 +4621,7 @@ function renderTentamenResults() {
 
   html += `
     <div class="scoreHero">
-      <img class="resultSticker" src="${resultStickerSrc(pct)}" alt="">
-      <div class="trophy">${svgIcon("award")}</div>
+      <div class="trophy">\uD83C\uDFC6</div>
       <div class="pct" style="color:${gradeColor};">${pct}%</div>
       <div class="gradeLabel" style="color:${gradeColor};">${gradeLabel}</div>
       <div class="subline">${correct} dari ${total} soal benar</div>
@@ -4656,7 +4652,7 @@ function renderTentamenResults() {
     </div>
   `;
 
-  html += `<button class="restartBtn iconBtn" id="restartTentamenBtn" title="Ulangi" aria-label="Ulangi">${svgIcon("reset")} <span class="lbl">Ulangi</span></button>`;
+  html += `<button class="restartBtn" id="restartTentamenBtn">\u21BA Ulangi</button>`;
 
   html += `<div class="reviewLabel">Detail jawaban:</div>`;
   html += `<div class="reviewList">`;
@@ -4680,12 +4676,10 @@ function formatDateShort(iso) {
 
 // ── Render: kartu Pengaturan (tema + volume) — tampil di bawah daftar kategori ──
 const THEME_OPTIONS = [
-  { value: "light", icon: svgIcon("sun"), label: "Terang" },
-  { value: "dark", icon: svgIcon("moon"), label: "Gelap" },
-  { value: "darkv2", icon: svgIcon("bulb"), label: "Gelap v2" },
-  { value: "lightv2", icon: svgIcon("star"), label: "Terang v2" },
+  { value: "light", icon: "\u2600\uFE0F", label: "Terang" },
+  { value: "dark", icon: "\uD83C\uDF19", label: "Gelap" },
   { value: "p5", icon: '<img src="./favicon.ico" style="width:16px;height:16px;vertical-align:middle;image-rendering:pixelated;">', label: "Persona 5" },
-  { value: "doksli", icon: svgIcon("document"), label: "Dokumen Asli (Doksli)" },
+  { value: "doksli", icon: '🙏', label: "Dokumen Asli (Doksli)" },
   { value: "sxf", icon: '<img src="./images/inline/e2c0159bfd3f.png" style="width:18px;height:18px;vertical-align:middle;border-radius:50%;">', label: "Spy x Family" },
 ];
 function renderSettingsCard() {
@@ -4693,11 +4687,12 @@ function renderSettingsCard() {
   const current = THEME_OPTIONS.find((o) => o.value === theme) || THEME_OPTIONS[1];
   return `
     <div class="settingsCard">
-      <div class="sectionLabel">${svgIcon("settings")} Pengaturan</div>
+      <div class="sectionLabel">\u2699\uFE0F Pengaturan</div>
 
       <div class="settingsRow">
         <div class="settingsRowText">
-          <span class="settingsRowTitle">${svgIcon("gamepad")} Multiplayer</span>
+          <span class="settingsRowTitle">\uD83C\uDFAE Multiplayer</span>
+          <span class="settingsRowDesc">Main bareng: masukkan kode room dari host</span>
         </div>
         <button class="themeModeToggle" id="mpOpenBtn" aria-label="Buka multiplayer">
           <span class="themeModeChevron">\u203A</span>
@@ -4707,9 +4702,10 @@ function renderSettingsCard() {
       <div class="settingsRow">
         <div class="settingsRowText">
           <span class="settingsRowTitle themeModeTitle">${current.icon} Mode UI: ${current.label}</span>
+          <span class="settingsRowDesc">Pilih tampilan!</span>
         </div>
         <button class="themeModeToggle" id="themeModeToggleBtn" aria-expanded="${themeMenuOpen}" aria-label="Pilih mode UI">
-          <span class="themeModeChevron${themeMenuOpen ? " open" : ""}">${svgIcon("chevron-down")}</span>
+          <span class="themeModeChevron${themeMenuOpen ? " open" : ""}">\u25BE</span>
         </button>
       </div>
       ${themeMenuOpen ? `
@@ -4724,13 +4720,14 @@ function renderSettingsCard() {
 
       <div class="settingsRow settingsRow-noBorder">
         <div class="settingsRowText">
-          <span class="settingsRowTitle">${svgIcon("speaker")} Volume Suara</span>
+          <span class="settingsRowTitle">\uD83D\uDD09 Volume Suara</span>
+          <span class="settingsRowDesc">Atur kerasnya suara pas jawaban benar/salah</span>
         </div>
       </div>
       <div class="volumeSliderRow">
-        <span class="volumeIcon">${svgIcon("speaker-off")}</span>
+        <span class="volumeIcon">\uD83D\uDD07</span>
         <input type="range" min="0" max="100" step="1" value="${volPct}" class="volumeSlider" id="volumeSlider" aria-label="Volume suara">
-        <span class="volumeIcon">${svgIcon("speaker")}</span>
+        <span class="volumeIcon">\uD83D\uDD0A</span>
         <span class="volumeVal mono" id="volumeVal">${volPct}%</span>
       </div>
       ${renderAnswertoneCard()}
@@ -4749,7 +4746,7 @@ function renderCustomCard() {
             <span class="pkgTitle">${escapeHtml(rec.title)}</span>
             <span class="pkgMeta">${rec.questions.length} soal \u00B7 ${formatDateShort(rec.savedAt)}</span>
           </button>
-          <button class="resetBtn customDelBtn" data-del-custom="${escapeAttr(rec.id)}" title="Hapus kuis">${svgIcon("trash")}</button>
+          <button class="resetBtn customDelBtn" data-del-custom="${escapeAttr(rec.id)}" title="Hapus kuis">\uD83D\uDDD1\uFE0F</button>
         </div>`;
   }).join("");
   return `
@@ -4761,12 +4758,13 @@ function renderCustomCard() {
       <input type="file" id="docxInput" accept=".docx,.pdf" multiple hidden>
       ${list}
       <label class="dropZone" for="docxInput">
-        <span class="dropIcon">${svgIcon("document")}</span>
+        <span class="dropIcon">\uD83D\uDCC4</span>
         <span class="dropTitle">Drag and drop</span>
-        <span class="dropFormats"><span><code>.docx</code></span><span><code>.pdf</code></span></span>
+        <span class="dropFormats"><span><code>.docx</code> — soal, gambar, soal rusak &amp; isian</span><span><code>.pdf</code> — soal pilihan ganda, teks dan gambar</span></span>
       </label>
       <a class="templateLink" href="https://drive.google.com/drive/folders/1WSxodjrD3jGzQKj0DBROVTUo7I5iBAun?usp=sharing" target="_blank" rel="noopener">Download template disini</a>
-      ${dropMsg ? `<div class="dropMsg">${markedMsgHtml(dropMsg)}</div>` : ""}
+      ${dropMsg ? `<div class="dropMsg">${escapeHtml(dropMsg)}</div>` : ""}
+      <div class="dropFormat">Format: <code>1. Soal</code> \u00B7 opsi <code>A.</code>\u2013<code>E.</code> \u00B7 <code>Kunci: X</code> \u00B7 <code>{penjelasan}</code></div>
     </div>`;
 }
 
@@ -4781,8 +4779,8 @@ function renderPickerScreen() {
   let html = `
     <main class="wrap">
       <div class="pickerHeader">
-        <h1 class="brandH1">Soalin<span class="brandMark">${svgIcon("brand")}</span></h1>
-        <p class="pickerSub">${packageManifest.length ? "Belajar? Kau?" : "Upload file .docx untuk dijadikan kuis."}</p>
+        <h1>Pilih Paket Soal</h1>
+        <p class="pickerSub">${packageManifest.length ? "Ketuk kategori untuk membuka daftar paket soal di dalamnya." : "Upload file .docx untuk dijadikan kuis."}</p>
       </div>
       <div class="categoryList">
         ${renderCustomCard()}
@@ -4796,7 +4794,7 @@ function renderPickerScreen() {
         <button class="categoryHeader${isOpen ? " open" : ""}" data-cat="${escapeAttr(cat)}">
           <span class="catName">${escapeHtml(cat)}</span>
           <span class="catMeta">${pkgs.length} paket</span>
-          <span class="catArrow">${isOpen ? svgIcon("chevron-up") : svgIcon("chevron-down")}</span>
+          <span class="catArrow">${isOpen ? "\u25B2" : "\u25BC"}</span>
         </button>
         <div class="categoryBody${isOpen ? " open" : ""}">
           ${pkgs.map((p) => `
@@ -4813,7 +4811,7 @@ function renderPickerScreen() {
   html += `</div>`;
   html += renderSettingsCard();
   if (allQuestions.length) {
-    html += `<button class="pickerCloseBtn iconBtn" id="pickerCloseBtn" title="Kembali ke paket saat ini" aria-label="Kembali ke paket saat ini">${svgIcon("chevron-left")} <span class="lbl">Kembali ke paket saat ini</span></button>`;
+    html += `<button class="pickerCloseBtn" id="pickerCloseBtn">\u2190 Kembali ke paket saat ini</button>`;
   }
   html += `</main>`;
   return html;
@@ -4920,7 +4918,6 @@ function render() {
   app.innerHTML = html;
   window.scrollTo(0, prevScrollY);
   attachHandlers();
-  fitPkgTitle();
   if (theme === "p5") requestAnimationFrame(p5ApplyRansom);
 }
 
