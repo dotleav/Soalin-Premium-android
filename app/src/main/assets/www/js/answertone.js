@@ -162,7 +162,7 @@ function answertonePreview(id) {
 // ── Kartu Answertone (di bawah Pengaturan Volume Suara) ───────────────────
 function renderAnswertoneCard() {
   const items = [...soundCatalog].sort((a, b) => a.name.localeCompare(b.name, "id"));
-  const onCount = items.filter((s) => answertoneGet(s).on).length;
+  const allSelected = items.length > 0 && items.every((s) => answertoneGet(s).on);
   const rows = items.map((s) => {
     const cfg = answertoneGet(s);
     const id = answertoneAttr(s.id);
@@ -176,31 +176,28 @@ function renderAnswertoneCard() {
             <select class="atTrigger" data-at-trigger="${id}" aria-label="Keluar saat">
               ${ANSWERTONE_TRIGGERS.map((t) => `<option value="${t.value}"${cfg.trigger === t.value ? " selected" : ""}>${t.label}</option>`).join("")}
             </select>
-            <button class="atBtn" data-at-play="${id}" aria-label="Putar contoh ${answertoneAttr(s.name)}">\u25B6</button>
-            ${s.custom ? `<button class="atBtn atDel" data-at-del="${id}" aria-label="Hapus ${answertoneAttr(s.name)}">\u2715</button>` : ""}
+            <button class="atBtn" data-at-play="${id}" aria-label="Putar contoh ${answertoneAttr(s.name)}">${svgIcon("play")}</button>
+            ${s.custom ? `<button class="atBtn atDel" data-at-del="${id}" aria-label="Hapus ${answertoneAttr(s.name)}">${svgIcon("close")}</button>` : ""}
           </div>`;
   }).join("");
   return `
       <div class="atWrap" id="answertoneCard">
         <div class="settingsRow atHead">
           <div class="settingsRowText">
-            <span class="settingsRowTitle">\uD83C\uDFB5 Answertone</span>
-            <span class="settingsRowDesc">Suara yang hanya keluar saat jawaban terjawab. Aktif: ${onCount} dari ${items.length}.</span>
+            <span class="settingsRowTitle">${svgIcon("music")} Answertone</span>
           </div>
           <button class="themeModeToggle" id="atToggleBtn" aria-expanded="${answertoneOpen}" aria-label="Buka daftar Answertone">
-            <span class="themeModeChevron${answertoneOpen ? " open" : ""}">\u25BE</span>
+            <span class="themeModeChevron${answertoneOpen ? " open" : ""}">${svgIcon("chevron-down")}</span>
           </button>
         </div>
         ${answertoneOpen ? `
         <div class="atBody">
           <div class="atBulk">
-            <button class="atBulkBtn" data-at-bulk="all">Centang semua</button>
-            <button class="atBulkBtn" data-at-bulk="none">Kosongkan</button>
-            <button class="atBulkBtn" id="atAddBtn">+ Suara sendiri</button>
+            <button class="atBulkBtn" id="atSelectBtn">${allSelected ? "Unselect" : "Select"}</button>
+            <button class="atBulkBtn" id="atAddBtn">+ Custom</button>
             <input type="file" id="atFile" accept="audio/*" hidden>
           </div>
           ${items.length ? `<div class="atList">${rows}</div>` : `<div class="atEmpty">Suara belum termuat. Coba buka ulang halaman.</div>`}
-          <div class="atHint">Suara yang tidak dicentang tidak akan keluar. Kalau semua kosong, tidak ada suara yang keluar.</div>
         </div>` : ""}
       </div>`;
 }
@@ -218,11 +215,12 @@ function attachAnswertoneHandlers() {
   }));
   card.querySelectorAll("[data-at-play]").forEach((el) => el.addEventListener("click", () => answertonePreview(el.dataset.atPlay)));
   card.querySelectorAll("[data-at-del]").forEach((el) => el.addEventListener("click", () => answertoneDelete(el.dataset.atDel)));
-  card.querySelectorAll("[data-at-bulk]").forEach((el) => el.addEventListener("click", () => {
-    const on = el.dataset.atBulk === "all";
+  const selectBtn = document.getElementById("atSelectBtn");
+  if (selectBtn) selectBtn.addEventListener("click", () => {
+    const on = !soundCatalog.every((s) => answertoneGet(s).on);
     soundCatalog.forEach((s) => answertoneSet(s.id, { on }));
     render();
-  }));
+  });
   const addBtn = document.getElementById("atAddBtn");
   const fileInput = document.getElementById("atFile");
   if (addBtn && fileInput) {

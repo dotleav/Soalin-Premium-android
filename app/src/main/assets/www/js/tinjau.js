@@ -31,14 +31,14 @@ function tentamenReviewBarHtml() {
   if (!tentamenReviewAllowed()) return "";
   const solved = tentamenSolvedBefore();
   if (!solved.length) return "";
-  let html = `<div class="trvBar"><button class="trvToggle${tentamenReviewListOpen ? " open" : ""}" id="tentamenReviewToggle" aria-expanded="${tentamenReviewListOpen}">\uD83D\uDCCB Soal sebelumnya <span class="mono">(${solved.length})</span></button></div>`;
+  let html = `<div class="trvBar"><button class="trvToggle iconBtn${tentamenReviewListOpen ? " open" : ""}" id="tentamenReviewToggle" title="Soal sebelumnya" aria-label="Soal sebelumnya" aria-expanded="${tentamenReviewListOpen}">${svgIcon("list")} <span class="lbl">Soal sebelumnya</span> <span class="mono">(${solved.length})</span></button></div>`;
   if (tentamenReviewListOpen) {
     html += `<div class="trvList">`;
     for (const i of solved) {
       const q = tentamenQuestions[i];
       const ok = tentamenIsCorrect(i);
       const snippet = String(q.question || "").replace(/\s+/g, " ").slice(0, 80);
-      html += `<button class="trvItem ${ok ? "ok" : "bad"}" data-review-idx="${i}"><span class="trvNum mono">${i + 1}</span><span class="trvText">${escapeHtml(snippet)}</span><span class="trvChip">${ok ? "\u2713 Benar" : "\u2717 Salah"}</span></button>`;
+      html += `<button class="trvItem ${ok ? "ok" : "bad"}" data-review-idx="${i}"><span class="trvNum mono">${i + 1}</span><span class="trvText">${escapeHtml(snippet)}</span><span class="trvChip">${ok ? svgIcon("check") + " Benar" : svgIcon("close") + " Salah"}</span></button>`;
     }
     html += `</div>`;
   }

@@ -1,5 +1,5 @@
 // Network-first: selalu ambil versi terbaru, fallback ke cache kalau offline.
-const CACHE = "soalinprem-v4";
+const CACHE = "soalinprem-v5";
 
 self.addEventListener("install", () => self.skipWaiting());
 

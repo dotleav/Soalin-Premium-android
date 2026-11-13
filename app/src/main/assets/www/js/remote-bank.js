@@ -39,7 +39,7 @@ async function loadRemoteIndex() {
   if (!idx || !Array.isArray(idx.packages)) return [];
   return idx.packages
     .filter((p) => BANK_TIERS.includes(p.tier || "reguler"))
-    .map((p) => (p.tier && p.tier !== "reguler" ? { ...p, category: "⭐ " + p.category } : p));
+    .map((p) => (p.tier && p.tier !== "reguler" ? { ...p, category: p.category } : p));
 }
 
 // Gambar di JSON disimpan relatif ("images/packages/...") seperti di app lokal.
