@@ -3204,6 +3204,8 @@ async function convertDocx(buf) {
       const hl = rawLine.text.startsWith(HL_MARK); // baris ini di-highlight (penanda kunci)
       const { images, isHeading, isListItem } = rawLine;
       const text = hl ? rawLine.text.slice(HL_MARK.length).trimStart() : rawLine.text;
+      // Soal/kunci baru memotong opsi yang belum selesai ("{" tanpa "}"): jangan telan baris ini.
+      if (pendingOpt && current && (isListItem || questionStart.test(text) || answerLine.test(text)) && text.indexOf("}") < 0) pendingOpt = null;
       if (pendingOpt && current) {
         const close = text.indexOf("}");
         const chunk = close < 0 ? text : text.slice(0, close);
@@ -3259,7 +3261,7 @@ async function convertDocx(buf) {
       for (const cells of rows) {
         if (cells.length < 2) continue;
         const lines = cells.map((c) => flat(c).flatMap(paraLines));
-        const text = (i) => lines[i].map((l) => l.text).filter(Boolean).join(" ");
+        const text = (i) => (lines[i] || []).map((l) => l.text).filter(Boolean).join(" ");
         const images = (i) => (lines[i] || []).flatMap((l) => l.images);
         const origNo = text(0), questionText = text(1);
         if (isFirstRow || /soal\s+asli|gambar\s+penjelasan/i.test(questionText) || /^no\.?$/i.test(origNo)) {
@@ -3284,7 +3286,7 @@ async function convertDocx(buf) {
       for (const cells of rows) {
         if (cells.length < 2) continue;
         const lines = cells.map((c) => flat(c).flatMap(paraLines));
-        const text = (i) => lines[i].map((l) => l.text).filter(Boolean).join(" ");
+        const text = (i) => (lines[i] || []).map((l) => l.text).filter(Boolean).join(" ");
         const images = (i) => (lines[i] || []).flatMap((l) => l.images);
         const origNo = text(0), questionText = text(1), jawabanText = text(2);
         if (isFirstRow || /^no\.?$/i.test(origNo)) {
@@ -3398,7 +3400,7 @@ const DIFFICULTY_CONFIG = {
   folivora: { label: "Folivora",     sticker: "./images/modes/folivora.webp",  timerSeconds: 300, tentamen: true,  desc: "pasti pas ditanya jawabannya \u201Chah?\u201D",  color: "#86efac" },
   bekicot:  { label: "Bekicot",      sticker: "./images/modes/bekicot.webp",   timerSeconds: 0,   tentamen: false, desc: "mode biasa aja kalau gitu",                    color: "#c084fc" },
   minites:  { label: "minites dr Erda", icon: "./images/difficulty/squidward.png", sticker: "./images/modes/minites.webp", timerSeconds: 15, tentamen: true, desc: "Makan noh 15 detik", color: "#2dd4bf" },
-  cbt:      { label: "CBT", sticker: "./images/modes/cbt.webp", timerSeconds: 0, tentamen: false, cbt: true, desc: "Computer Based Test", descHtml: "<s>Cognitive Based Therapy</s><br><b>Computer Based Test</b>", color: "#f472b6" },
+  cbt:      { label: "CBT", sticker: "./images/modes/cbt.webp", timerSeconds: 0, tentamen: false, cbt: true, desc: "Computer Based Trauma", descHtml: "<s>Computer Based Trauma</s>", color: "#f472b6" },
 };
 
 // Ikon tingkat kesulitan: pakai gambar kalau ada `icon`, selain itu emoji.
@@ -3420,7 +3422,7 @@ function escapeHtml(str) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 }
-function escapeAttr(str) { return escapeHtml(str); }
+function escapeAttr(str) { return escapeHtml(str).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
 
 // ── Audio (benar/salah) ──────────────────────────────────────────────────
 // File suara "benar" tinggal ditaruh di folder audio/benar/, dan file
@@ -3826,7 +3828,7 @@ function resetQuizStateForNewPackage() {
 
 async function selectPackage(pkg) {
   try {
-    const mod = pkg.custom ? { questions: prepareCustomQs(customRec(pkg.recId)) } : { questions: await loadRemoteQuestions(pkg) };
+    const mod = pkg.custom ? { questions: prepareCustomQs(await loadCustomFull(pkg.recId)) } : { questions: await loadRemoteQuestions(pkg) };
     allQuestions = Array.isArray(mod.questions) ? mod.questions : [];
   } catch {
     allQuestions = [];
@@ -3866,6 +3868,7 @@ function clearCustomProgress(recId) {
 
 // Rekaman IndexedDB → soal siap main (index gambar diganti object URL).
 function prepareCustomQs(rec) {
+  if (!rec) return [];
   customUrls.forEach((u) => u && URL.revokeObjectURL(u));
   const urls = rec.blobs.map((b) => b && URL.createObjectURL(b));
   customUrls = urls;
@@ -3874,18 +3877,46 @@ function prepareCustomQs(rec) {
   return rec.questions.map((q) => ({ ...q, questionImages: pick(q.questionImages), explanationImages: pick(q.explanationImages), optionImages: pickOpt(q.optionImages) }));
 }
 
-// Muat semua kuis custom dari IndexedDB. Kunci "custom" (format lama, 1 kuis) ikut dibaca.
+// Indeks kuis custom: ringan (tanpa soal & gambar), satu kunci. Boot hanya membaca ini;
+// isi lengkap satu kuis dibaca saat kuis dibuka (loadCustomFull).
+const CUSTOM_INDEX_KEY = "cqindex";
+const customMeta = (rec, key) => ({ id: rec.id, title: rec.title, count: rec.questions.length, savedAt: rec.savedAt || 0, key });
+
+async function saveCustomIndex() {
+  const list = customQuizzes.filter((r) => !r.transient).map(({ transient, ...m }) => m);
+  await idb("readwrite", (st) => st.put(list, CUSTOM_INDEX_KEY)).catch(() => {});
+}
+
+// Migrasi sekali untuk instal lama: baca semua kuis (format lama) lalu bangun indeksnya.
+async function rebuildCustomIndex() {
+  const keys = await idb("readonly", (st) => st.getAllKeys());
+  const list = [];
+  for (const key of keys) {
+    if (!(key === "custom" || (typeof key === "string" && key.startsWith("cq:")))) continue;
+    const rec = await idb("readonly", (st) => st.get(key));
+    if (rec?.questions) list.push(customMeta({ ...rec, id: rec.id || "legacy" }, key));
+  }
+  return list;
+}
+
+// Muat indeks kuis custom saat boot. Kunci "custom" (format lama, 1 kuis) ikut terbaca lewat migrasi.
 async function loadCustom() {
   customQuizzes = [];
   try {
-    const keys = await idb("readonly", (st) => st.getAllKeys());
-    for (const key of keys) {
-      if (!(key === "custom" || (typeof key === "string" && key.startsWith("cq:")))) continue;
-      const rec = await idb("readonly", (st) => st.get(key));
-      if (rec?.questions) customQuizzes.push({ ...rec, id: rec.id || "legacy", key });
+    let list = await idb("readonly", (st) => st.get(CUSTOM_INDEX_KEY));
+    if (!Array.isArray(list)) {
+      list = await rebuildCustomIndex();
+      await idb("readwrite", (st) => st.put(list, CUSTOM_INDEX_KEY)).catch(() => {});
     }
-    customQuizzes.sort((a, b) => b.savedAt - a.savedAt);
+    customQuizzes = list.slice().sort((a, b) => b.savedAt - a.savedAt);
   } catch { /* IndexedDB diblokir → daftar kosong */ }
+}
+
+// Isi lengkap satu kuis (soal + gambar). Dipanggil saat kuis dimainkan, bukan saat boot.
+async function loadCustomFull(recId) {
+  const meta = customRec(recId);
+  if (!meta) return null;
+  return idb("readonly", (st) => st.get(meta.key)).catch(() => null);
 }
 
 // Pilih/seret satu atau beberapa file → konversi → simpan sebagai kuis baru (tidak menimpa kuis lain).
@@ -3904,7 +3935,8 @@ async function handleDocx(fileList) {
       const rec = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title: file.name.replace(/\.(docx|pdf)$/i, ""), questions, blobs, savedAt: Date.now() };
       let saved = true;
       await idb("readwrite", (st) => st.put(rec, "cq:" + rec.id)).catch(() => { saved = false; });
-      customQuizzes.unshift({ ...rec, key: "cq:" + rec.id });
+      customQuizzes.unshift({ ...customMeta(rec, "cq:" + rec.id), transient: !saved });
+      await saveCustomIndex();
       clearCustomProgress(rec.id);
       last = rec;
       const skipped = stats.skippedExt.length ? ` [warn] gambar .${stats.skippedExt.join(", .")} dilewati (browser tidak bisa menampilkan)` : "";
@@ -3929,6 +3961,7 @@ async function deleteCustom(recId) {
   customQuizzes = customQuizzes.filter((r) => r.id !== recId);
   clearCustomProgress(recId);
   await idb("readwrite", (st) => st.delete(rec.key)).catch(() => {});
+  await saveCustomIndex();
   if (wasActive) {
     allQuestions = [];
     activePackage = null;
@@ -4747,7 +4780,7 @@ function renderCustomCard() {
         <div class="customRow">
           <button class="packageItem${active ? " active" : ""}" data-pkg="${escapeAttr(id)}">
             <span class="pkgTitle">${escapeHtml(rec.title)}</span>
-            <span class="pkgMeta">${rec.questions.length} soal \u00B7 ${formatDateShort(rec.savedAt)}</span>
+            <span class="pkgMeta">${rec.count} soal \u00B7 ${formatDateShort(rec.savedAt)}</span>
           </button>
           <button class="resetBtn customDelBtn" data-del-custom="${escapeAttr(rec.id)}" title="Hapus kuis">${svgIcon("trash")}</button>
         </div>`;

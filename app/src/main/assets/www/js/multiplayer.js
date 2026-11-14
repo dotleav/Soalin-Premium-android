@@ -37,6 +37,24 @@ function mpRemaining() {
   return Math.max(0, (st.startedAt || mpNow()) + timer * 1000 - mpNow());
 }
 
+// Hitung mundur: cukup ganti teks dan lebar bar. Render penuh hanya saat waktu habis, sekali per soal.
+let mpExpiredIdx = null;
+function mpTick() {
+  if (mpScreen !== "room") return;
+  const rem = mpRemaining();
+  if (rem === null) return;
+  if (rem === 0) {
+    const idx = mpRoom.state?.currentIdx;
+    if (mpExpiredIdx !== idx) { mpExpiredIdx = idx; render(); }
+    return;
+  }
+  const timerEl = document.querySelector(".mpTimer");
+  if (!timerEl) return;
+  timerEl.textContent = `${Math.ceil(rem / 1000)} dtk`;
+  const fillEl = document.querySelector(".mpTimerFill");
+  if (fillEl) fillEl.style.width = `${(rem / (mpTimerSec() * 1000)) * 100}%`;
+}
+
 function mpInit() {
   if (mpAuthPromise) return mpAuthPromise;
   mpAuthPromise = new Promise((resolve, reject) => {
@@ -157,9 +175,8 @@ async function mpEnterRoom(code, asHost) {
   mpIsHost = asHost;
   try { mpMyAnswers = JSON.parse(localStorage.getItem(mpAnswersKey()) || "{}"); } catch { mpMyAnswers = {}; }
   mpAttachListeners();
-  mpTickHandle = setInterval(() => {
-    if (mpScreen === "room" && mpRemaining() !== null) render();
-  }, 500);
+  mpExpiredIdx = null;
+  mpTickHandle = setInterval(mpTick, 500);
   mpScreen = "room";
   mpBusy = false;
   render();

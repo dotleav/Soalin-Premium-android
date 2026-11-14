@@ -2,7 +2,7 @@
 // Baca version.json dari repo, kalau versinya lebih baru tampilkan banner. Gagal = diam saja.
 
 const SOALIN_UPDATE = {
-  currentVersion: "1.6",   // = versionName (Android) / version (PC) build ini
+  currentVersion: "1.9",   // = versionName (Android) / version (PC) build ini
   manifestUrl: "https://raw.githubusercontent.com/dotleav/soalin-premium-dist/main/version.json",     // isi: { "version": "1.7", "url": "...apk atau .exe" }
 };
 
